@@ -10,7 +10,6 @@ import sam.compose.cocktailworldjetpackcompose.utils.API_KEY
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    private lateinit var apiService: ApiService
     private lateinit var retrofit: Retrofit
 
     private val interceptor = Interceptor{chain: Interceptor.Chain ->
