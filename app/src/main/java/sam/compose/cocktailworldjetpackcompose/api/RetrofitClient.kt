@@ -6,6 +6,7 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import sam.compose.cocktailworldjetpackcompose.utils.API_KEY
 import java.util.concurrent.TimeUnit
 
@@ -33,7 +34,7 @@ object RetrofitClient {
         .addInterceptor(httpLoggingInterceptor)
         .build()
 
-    fun getApiService(): Retrofit{
+    fun getApiService(): ApiService{
 
         if(!this::retrofit.isInitialized){
         retrofit = Retrofit.Builder()
@@ -41,6 +42,6 @@ object RetrofitClient {
             .client(okkHttpClient)
             .build()
         }
-        return retrofit
+        return retrofit.create(ApiService::class.java)
     }
 }

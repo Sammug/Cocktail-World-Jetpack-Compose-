@@ -1,4 +1,4 @@
-package sam.compose.cocktailworldjetpackcompose.ui.theme.layouts
+package sam.compose.cocktailworldjetpackcompose.ui.theme.itemlayouts
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,10 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -22,12 +19,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import sam.compose.cocktailworldjetpackcompose.Greeting
 import sam.compose.cocktailworldjetpackcompose.R
-import sam.compose.cocktailworldjetpackcompose.ui.theme.*
+import sam.compose.cocktailworldjetpackcompose.ui.theme.CocktailWorldJetpackComposeTheme
+import sam.compose.cocktailworldjetpackcompose.ui.theme.Golden
+import sam.compose.cocktailworldjetpackcompose.ui.theme.LightPurple
 
 @Composable
-fun TopTenDrinksItemLayout(
+fun LatestDrinksItemLayout(
     modifier: Modifier = Modifier,
     drinkName: String,
     drinkCategory: String,
@@ -35,45 +33,25 @@ fun TopTenDrinksItemLayout(
     drinkThumbNail: String,
     onclick: () -> Unit
 ) {
-    Box(modifier = Modifier
-            .clip(RoundedCornerShape(4.dp))
-            .fillMaxWidth()
-            .height(300.dp)
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .background(color = LightPurple)
+            .clip(RoundedCornerShape(8.dp))
             .clickable { }
             .then(modifier)
     ) {
-        val imageDrawable = painterResource(id = R.drawable.drink_image)
-        Image(
-            painter = imageDrawable,
-            contentDescription = "Recipe Thumbnail",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.fillMaxSize()
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        Dark,
-                        Color.Transparent
-                    )
-                )
-            )
-        )
-
         Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 24.dp)
         ) {
+            val imageDrawable = painterResource(id = R.drawable.drink_image)
+            Image(painter = imageDrawable, contentDescription = "Recipe Thumbnail")
 
             Text(
                 text = drinkName,
                 style = TextStyle(
                     color = Golden,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
+                    fontSize = 14.sp,
                     fontFamily = FontFamily.SansSerif
                 ),
                 modifier = modifier.padding(textPadding)
@@ -83,7 +61,7 @@ fun TopTenDrinksItemLayout(
                 style = TextStyle(
                     color = Color.White,
                     fontWeight = FontWeight.Normal,
-                    fontSize = 18.sp,
+                    fontSize = 11.sp,
                     fontFamily = FontFamily.SansSerif
                 ),
                 modifier = modifier.padding(horizontal = textPadding)
@@ -96,9 +74,9 @@ fun TopTenDrinksItemLayout(
 
 @Preview(showBackground = true)
 @Composable
-fun FourthPreview() {
+fun DefaultPreview() {
     CocktailWorldJetpackComposeTheme {
-        TopTenDrinksItemLayout(
+        LatestDrinksItemLayout(
             drinkName = "Cocktail Horse's Neck",
             drinkCategory = "Cocktail",
             drinkThumbNail = "",
