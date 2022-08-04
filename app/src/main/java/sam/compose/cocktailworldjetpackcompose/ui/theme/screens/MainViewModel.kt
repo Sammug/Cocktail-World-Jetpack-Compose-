@@ -3,12 +3,17 @@ package sam.compose.cocktailworldjetpackcompose.ui.theme.screens
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import sam.compose.cocktailworldjetpackcompose.recipesrepository.RecipesRepository
 import sam.compose.cocktailworldjetpackcompose.utils.Resource
+import javax.inject.Inject
 
-class MainViewModel(private val recipesRepository: RecipesRepository): ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val recipesRepository: RecipesRepository
+) : ViewModel() {
     private var _popularRecipesState = mutableStateOf(RecipesState())
     val popularRecipesState = _popularRecipesState
 
