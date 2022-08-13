@@ -7,5 +7,4 @@ data class RecipesState(
     var recipes: List<Drink> = emptyList(),
     var loading: Boolean = false,
     var error: String = ""
-
 )

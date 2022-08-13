@@ -36,12 +36,12 @@ fun LatestDrinksItemLayout(
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .background(color = LightPurple)
             .clip(RoundedCornerShape(8.dp))
             .clickable { }
             .then(modifier)
     ) {
         Column(modifier = Modifier
+            .background(color = LightPurple)
         ) {
             val imageDrawable = painterResource(id = R.drawable.drink_image)
             Image(painter = imageDrawable, contentDescription = "Recipe Thumbnail")
@@ -67,7 +67,7 @@ fun LatestDrinksItemLayout(
                 modifier = modifier.padding(horizontal = textPadding)
             )
 
-            Spacer(modifier = Modifier.size(2.dp))
+            Spacer(modifier = Modifier.size(8.dp))
         }
     }
 }

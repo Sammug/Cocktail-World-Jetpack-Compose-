@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -34,27 +35,38 @@ fun PopularDrinksItemLayout(
 ) {
     Box(modifier = Modifier
             .width(180.dp)
-            .height(120.dp)
-            .background(color = LightPurple)
+            .height(100.dp)
             .clip(RoundedCornerShape(4.dp))
             .clickable {  }
         .then(modifier)
     ) {
         Row(modifier = Modifier
-            .fillMaxSize()
+            .width(180.dp)
+            .height(120.dp)
+            .background(color = LightPurple)
         ) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .aspectRatio(1f)
-                .weight(1f)
-            ) {
-                val imageDrawable = painterResource(id = R.drawable.drink_image)
-                Image(modifier = Modifier.fillMaxSize(),
-                    painter = imageDrawable,
-                    contentDescription = "Recipe Thumbnail"
-                )
-            }
+            val imageDrawable = painterResource(id = R.drawable.drink_image)
+            Image(modifier = modifier
+                .size(height = 120.dp, width = 180.dp)
+                .weight(1f),
+                painter = imageDrawable,
+                contentScale = ContentScale.FillBounds,
+                contentDescription = "Recipe Thumbnail"
+            )
+//            Box(modifier = Modifier
+//                .fillMaxWidth()
+//                .fillMaxHeight()
+//                .aspectRatio(1f)
+//                .weight(1f)
+//            ) {
+//                val imageDrawable = painterResource(id = R.drawable.drink_image)
+//                Image(modifier = Modifier
+//                    .fillMaxWidth()
+//                    .fillMaxHeight(),
+//                    painter = imageDrawable,
+//                    contentDescription = "Recipe Thumbnail"
+//                )
+//            }
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,7 +82,8 @@ fun PopularDrinksItemLayout(
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp,
                         fontFamily = FontFamily.SansSerif
-                    )
+                    ),
+                modifier = Modifier.padding(top = 16.dp)
                 )
                 Text(
                     text = drinkCategory,

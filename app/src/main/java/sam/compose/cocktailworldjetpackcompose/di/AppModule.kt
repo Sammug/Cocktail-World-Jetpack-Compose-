@@ -11,6 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import sam.compose.cocktailworldjetpackcompose.api.ApiService
+import sam.compose.cocktailworldjetpackcompose.recipesrepository.RecipesRepository
 import sam.compose.cocktailworldjetpackcompose.utils.API_KEY
 import sam.compose.cocktailworldjetpackcompose.utils.BASE_URL
 import java.util.concurrent.TimeUnit
@@ -46,6 +47,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideRepository(apiService: ApiService) = RecipesRepository(apiService)
 
     private val interceptor = Interceptor{chain: Interceptor.Chain ->
         val request: Request = chain.request()

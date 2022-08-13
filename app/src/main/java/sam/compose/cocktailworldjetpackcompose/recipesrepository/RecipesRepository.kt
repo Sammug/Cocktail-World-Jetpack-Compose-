@@ -1,5 +1,6 @@
 package sam.compose.cocktailworldjetpackcompose.recipesrepository
 
+import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -8,7 +9,9 @@ import sam.compose.cocktailworldjetpackcompose.dtos.Recipe
 import sam.compose.cocktailworldjetpackcompose.utils.Resource
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class RecipesRepository @Inject constructor(
     private val apiService: ApiService
 ){

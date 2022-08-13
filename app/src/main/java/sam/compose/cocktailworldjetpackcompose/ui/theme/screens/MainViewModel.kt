@@ -1,9 +1,12 @@
 package sam.compose.cocktailworldjetpackcompose.ui.theme.screens
 
+import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import sam.compose.cocktailworldjetpackcompose.recipesrepository.RecipesRepository
@@ -15,13 +18,13 @@ class MainViewModel @Inject constructor(
     private val recipesRepository: RecipesRepository
 ) : ViewModel() {
     private var _popularRecipesState = mutableStateOf(RecipesState())
-    val popularRecipesState = _popularRecipesState
+    val popularRecipesState: State<RecipesState> = _popularRecipesState
 
     private var _latestRecipesState = mutableStateOf(RecipesState())
-    val latestRecipesState = _latestRecipesState
+    val latestRecipesState: State<RecipesState> = _latestRecipesState
 
     private var _topTenRecipesState = mutableStateOf(RecipesState())
-    val topTenRecipesState = _topTenRecipesState
+    val topTenRecipesState: State<RecipesState> = _topTenRecipesState
 
     init{
         getAllPopularRecipes()
@@ -30,10 +33,13 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getAllPopularRecipes() = viewModelScope.launch {
-        recipesRepository.getPopularRecipes().onEach {resource ->
+        Log.i(" DRINKS","VIEW MODEL")
+        recipesRepository.getPopularRecipes().collect { resource ->
             when(resource){
                 is Resource.Success -> {
                     _popularRecipesState.value = RecipesState(recipes = resource.data?.drinks!!)
+
+                    Log.i(" DRINKS",popularRecipesState.toString())
                 }
                 is Resource.Error -> {
                     _popularRecipesState.value = RecipesState(error = resource.message ?: "Unexpected error occurred")
@@ -46,7 +52,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getMostLatestRecipes() = viewModelScope.launch {
-        recipesRepository.getPopularRecipes().onEach {resource ->
+        recipesRepository.getLatestRecipes().collect { resource ->
             when(resource){
                 is Resource.Success -> {
                     _latestRecipesState.value = RecipesState(recipes = resource.data?.drinks!!)
@@ -62,7 +68,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getTopTenRecipes() = viewModelScope.launch {
-        recipesRepository.getPopularRecipes().onEach {resource ->
+        recipesRepository.getPopularRecipes().collect { resource ->
             when(resource){
                 is Resource.Success -> {
                     _topTenRecipesState.value = RecipesState(recipes = resource.data?.drinks!!)
