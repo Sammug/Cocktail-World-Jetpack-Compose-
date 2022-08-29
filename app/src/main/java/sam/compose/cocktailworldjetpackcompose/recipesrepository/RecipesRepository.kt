@@ -47,5 +47,15 @@ class RecipesRepository @Inject constructor(
             emit(Resource.Error(data = null, message = exc.localizedMessage ?:"An expected error occurred"))
         }
     }
+    suspend fun getRecipeInfo(recipeId: String): Flow<Resource<Recipe>> = flow {
+        try{
+            val recipeDetails = apiService.getDrinkDetails(recipeId)
+            emit(Resource.Success(data = recipeDetails.body()))
+        }catch(exc: HttpException){
+            emit(Resource.Error(data = null, message = "Couldn't reach server, check your internet connection"))
+        }catch(exc: IOException){
+            emit(Resource.Error(data = null, message = exc.localizedMessage ?:"An expected error occurred"))
+        }
+    }
 }
 

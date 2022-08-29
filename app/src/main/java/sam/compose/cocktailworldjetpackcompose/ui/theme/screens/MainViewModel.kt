@@ -26,6 +26,9 @@ class MainViewModel @Inject constructor(
     private var _topTenRecipesState = mutableStateOf(RecipesState())
     val topTenRecipesState: State<RecipesState> = _topTenRecipesState
 
+    private var _recipeInfoState = mutableStateOf(RecipesState())
+    val recipeInfoState: State<RecipesState> = _recipeInfoState
+
     init{
         getAllPopularRecipes()
         getMostLatestRecipes()
@@ -78,6 +81,21 @@ class MainViewModel @Inject constructor(
                 }
                 is Resource.Loading -> {
                     _topTenRecipesState.value = RecipesState(loading = true)
+                }
+            }
+        }
+    }
+    fun getTopTenRecipes(recipeId: String) = viewModelScope.launch {
+        recipesRepository.getRecipeInfo(recipeId).collect { resource ->
+            when(resource){
+                is Resource.Success -> {
+                    _recipeInfoState.value = RecipesState(recipes = resource.data?.drinks!!)
+                }
+                is Resource.Error -> {
+                    _recipeInfoState.value = RecipesState(error = resource.message ?: "Unexpected error occurred")
+                }
+                is Resource.Loading -> {
+                    _recipeInfoState.value = RecipesState(loading = true)
                 }
             }
         }

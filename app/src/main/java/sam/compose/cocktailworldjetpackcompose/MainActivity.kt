@@ -1,23 +1,21 @@
+@file:OptIn(ExperimentalPagerApi::class)
+
 package sam.compose.cocktailworldjetpackcompose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
-import sam.compose.cocktailworldjetpackcompose.ui.theme.CocktailWorldJetpackComposeTheme
 import sam.compose.cocktailworldjetpackcompose.ui.theme.screens.HomeScreen
-import sam.compose.cocktailworldjetpackcompose.ui.theme.screens.MainViewModel
+import sam.compose.cocktailworldjetpackcompose.ui.theme.styles.CocktailWorldJetpackComposeTheme
+import sam.compose.cocktailworldjetpackcompose.ui.theme.styles.Dark
+
 @ExperimentalFoundationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -28,22 +26,12 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = Dark
                 ) {
-                    val viewModel: MainViewModel = hiltViewModel()
-                    val popularRecipesState = viewModel.popularRecipesState.value
-                    val latestRecipesState = viewModel.latestRecipesState.value
-                    val topTenRecipesState = viewModel.topTenRecipesState.value
-                    HomeScreen(popularRecipesState,latestRecipesState,topTenRecipesState)
+                    val navController = rememberNavController()
+                    HomeScreen(navController = navController)
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    CocktailWorldJetpackComposeTheme {
     }
 }
